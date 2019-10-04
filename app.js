@@ -19,8 +19,7 @@ app.set('view engine', 'ejs');
 const usersRouter = require("./routes/user.route");
 
 app.use("/api/users", usersRouter);
-console.log(config)
-
+ 
 mongoose.connect(config.dbURI, {
   dbName: config.dbName,
   auto_reconnect: true,

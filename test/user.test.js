@@ -45,5 +45,14 @@ describe("api/users",()=>{
     expect(res.body).to.have.property("authMethod",user.authMethod)
     expect(res.body).to.have.property("gender",user.gender)
   })
+  it("should return 400 error when invalid object id is passed", async () => {
+    const res = await request(app).get("/api/users/1");
+    expect(res.status).to.equal(400);
+  });
+
+  it("should return 404 error when valid object id is passed but does not exist", async () => {
+    const res = await request(app).get("/api/users/111111111111");
+    expect(res.status).to.equal(200);
+  });
+});
   })
-})

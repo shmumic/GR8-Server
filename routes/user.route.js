@@ -21,8 +21,7 @@ const controller = require("../controllers/user.controller");
       res.send("moc_post_bunch_ofuser")});
   router
     .route("/:id")
-    .get(function(req,res){
-      res.send({name:"testUser1",authMethod:"test@gmail.com",gender:"Genderless"})})
+    .get(controller.getUser)
     .put(function(req,res){
       res.send("mock_update_one_user_by_id")})
     .delete(function(req,res){

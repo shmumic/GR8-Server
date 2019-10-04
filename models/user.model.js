@@ -7,7 +7,7 @@ const userSchema = new mongoose.Schema({
     minlength: 3,
     maxlength: 50
   },
-  AuthanticationMethod: { ///TBD
+  authMethod: { ///TBD
     type: String,
     required: true,
     minlength: 5,

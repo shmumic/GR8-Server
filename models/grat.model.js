@@ -46,4 +46,4 @@ const gratSchema = new mongoose.Schema({ //grat stands for gratitude
 
 });
 module.exports.Grat = mongoose.model("Grat", gratSchema);
-module.export.gratSchema = gratSchema;
+module.exports.gratSchema = gratSchema;

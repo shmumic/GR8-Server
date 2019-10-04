@@ -1,7 +1,7 @@
-
-module.exports = {
-    db: process.env.MONGODB|| 'mongodb://localhost:27017/Gr8Ful',
-    dbLog: process.env.MONGODB|| 'mongodb://localhost:27017/logs', //right now we use in production the same db for logs, but for localhost good practice to sep
-    dbTestLocal: 'mongodb://localhost:27017/Gr8Ful_Test',
-    dbTestRemote: process.env.remoteTestDBURI,
+ module.exports = {
+    dbURI: process.env.MONGODB|| 'mongodb://localhost:27017',
+    dbTestRemoteURI: process.env.remoteTestDBURI,
+    dbName: 'gr8FulDB',
+    dbTestName: 'gr8FulDBTest',
+    dbLogsName:  'logs',
     port: process.env.PORT || 3000 }

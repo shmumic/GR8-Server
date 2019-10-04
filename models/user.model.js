@@ -1,5 +1,5 @@
 const mongoose = require("mongoose");
-import gratSchema from require("./grat.model");
+const grat = require("./grat.model");
 const userSchema = new mongoose.Schema({
   name: {
     type: String,
@@ -17,8 +17,8 @@ const userSchema = new mongoose.Schema({
   gender: {
     type: String,
     required: true
-  }
-  gratitudes: [gratSchema]
+  },
+  gratitudes: [grat.gratSchema]
 
 });
 

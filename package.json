@@ -7,11 +7,13 @@
     "test": "test"
   },
   "scripts": {
-    "test": "mocha"
+    "test": "mocha 'test/**/*.js' --timeout 30000",
+    "test-debug": "mocha --debug 'test/**/*.js' --timeout 30000"
   },
   "author": "Mickey Shmueli",
   "license": "ISC",
   "dependencies": {
+    "Math": "0.0.1-security",
     "body-parser": "^1.19.0",
     "chai": "^4.2.0",
     "dot": "^1.1.2",

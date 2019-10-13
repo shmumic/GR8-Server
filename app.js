@@ -2,9 +2,14 @@ require('dotenv').config()
 const express = require("express");
 const mongoose = require("mongoose");
 const createError = require("http-errors");
-const path = require('path');
-var config = require("./config");
-const app = express();
+const path = require("path");
+const gConfig = require("./config");
+const envi = process.env.ENV;
+
+const config = gConfig[envi];
+console.log(config);
+
+var app = express();
 app.use(express.json());
 app.use(express.urlencoded({
   extended: false
@@ -17,6 +22,7 @@ app.engine('html', require('ejs').renderFile);
 app.set('view engine', 'ejs');
 
 const usersRouter = require("./routes/user.route");
+const gratRouter = require("./routes/user.route");
 
 app.use("/api/users", usersRouter);
  
@@ -35,7 +41,9 @@ mongoose.connect(config.dbURI, {
 });
 
 
-app.listen(config.port, function() {
-  console.log("Express server listening on port " + config.port);
+app.listen(config.express_port, function () {
+    console.log("Express server listening on port " + config.express_port);
+    app.emit("appStarted");
+
 });
 module.exports.app = app;

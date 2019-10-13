@@ -16,9 +16,9 @@ const controller = require("../controllers/user.controller");
   router
     .route("/")
     .get(function(req,res){
-      res.send("mock_get_all_users")})
-    .post(function(req,res){
-      res.send("moc_post_bunch_ofuser")});
+        res.send("Nothing here :) ")
+    })
+      .post(controller.createUser);
   router
     .route("/:id")
     .get(controller.getUser)

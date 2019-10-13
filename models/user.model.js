@@ -14,12 +14,20 @@ const userSchema = new mongoose.Schema({
     maxlength: 255,
     unique: true
   },
+  googleId: String,
+  facebookId: String,
+
+  age: {
+    type: Number,
+    min: 1,
+    max: 130
+  },
   gender: {
     type: String,
     required: true
   },
   gratitudes: [grat.gratSchema]
 
-});
+}, {strict: true});
 
 module.exports.User = mongoose.model("User", userSchema);

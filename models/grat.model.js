@@ -17,8 +17,8 @@ const gratSchema = new mongoose.Schema({ //grat stands for gratitude
   published: {
     type: Boolean
   },
-  source:{
-    userId : String,//links to the author
+    userId: String,//links to the author
+    source: {
     ip:String,
     browser: String,
     location: { //GeoJson

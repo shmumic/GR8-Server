@@ -13,20 +13,17 @@ describe("api/users", function () {
 
         before((done) => {
 
-            console.log("strating to run test...");
-
             User.deleteMany({}).then(done())
 
         });
-        it("should return a user if a valid is request provided", function (done) {
-
+        it("Sanity: should return a user if a valid is request provided", function (done) {
 
             console.log("starting this tests for real!");
             let username = "testUser1";
             let authMethod = "test" + Math.random() + "@gmail.com";
             let gender = "Genderless";
             user = new User({
-                name: username,
+                nickName: username,
                 authMethod: authMethod,
                 gender: gender
             });
@@ -44,7 +41,7 @@ describe("api/users", function () {
                         .expect(function (res) {
                             console.log(res.body);
                             expect(res.body._id).to.equal(userAdded._id);
-                            expect(res.body.name).to.equal(userAdded.name);
+                            expect(res.body.nickName).to.equal(userAdded.nickName);
                             expect(res.body.authMethod).to.equal(userAdded.authMethod);
                             expect(res.body.gender).to.equal(userAdded.gender);
 
@@ -57,6 +54,7 @@ describe("api/users", function () {
 
 
         }).timeout(10000);
+
     })
 
 });

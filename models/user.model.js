@@ -1,7 +1,7 @@
 const mongoose = require("mongoose");
 const grat = require("./grat.model");
 const userSchema = new mongoose.Schema({
-  name: {
+    nickName: {
     type: String,
     required: true,
     minlength: 3,

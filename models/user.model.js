@@ -1,19 +1,19 @@
 const mongoose = require("mongoose");
 const grat = require("./grat.model");
+const findOrCreate = require("mongoose-findorcreate");
+
 const userSchema = new mongoose.Schema({
     nickName: {
     type: String,
-    required: true,
-    minlength: 3,
+        minlength: 3,
     maxlength: 50
   },
-  authMethod: { ///TBD
-    type: String,
-    required: true,
-    minlength: 5,
-    maxlength: 255,
-    unique: true
-  },
+    /*  authMethod: { ///TBD
+        type: String,
+         minlength: 5,
+        maxlength: 255,
+        unique: true
+      },*/
   googleId: String,
   facebookId: String,
 
@@ -24,10 +24,10 @@ const userSchema = new mongoose.Schema({
   },
   gender: {
     type: String,
-    required: true
   },
   gratitudes: [grat.gratSchema]
 
 }, {strict: true});
+userSchema.plugin(findOrCreate);
 
 module.exports.User = mongoose.model("User", userSchema);

@@ -1,49 +1,79 @@
-require('dotenv').config()
-const express = require("express");
-const mongoose = require("mongoose");
-const createError = require("http-errors");
-const path = require("path");
+//configuration and env
+require('dotenv').config();
 const gConfig = require("./config");
 const envi = process.env.ENV;
+const serverConfig = gConfig[envi];
+const createError = require("http-errors");
+const path = require("path");
+const bodyParser = require("body-parser");
+const request = require("request");
 
-const config = gConfig[envi];
-console.log(config);
+const express = require("express");
+const mongoose = require("mongoose");
+const session = require("express-session");
+
+//auth section: passport stratgies and jwt
+const passport = require("passport");
 
 var app = express();
-app.use(express.json());
-app.use(express.urlencoded({
-  extended: false
+app.use(session({
+  secret: 'keyboard cat',
+  resave: false,
+  saveUninitialized: true,
+  cookie: {
+    //  secure: true
+  }
 }));
-//app.use("/api/users", usersRouter);
+//serverConfig passport and passport strategies
+app.use(passport.initialize());
+app.use(passport.session());
+
+
+app.use(express.json());
+app.use(express.urlencoded({extended: false}));
+
+
+//ejs rendering and path.
 app.use(express.static(__dirname));
 app.use(express.static(path.join(__dirname, 'public')));
 app.set('views', __dirname + '/public/views');
 app.engine('html', require('ejs').renderFile);
 app.set('view engine', 'ejs');
+app.use(bodyParser.urlencoded({extended: true}));
+app.use(bodyParser.json());
 
+//routing
 const usersRouter = require("./routes/user.route");
-const gratRouter = require("./routes/user.route");
-
 app.use("/api/users", usersRouter);
- 
-mongoose.connect(config.dbURI, {
-  dbName: config.dbName,
+
+const gratRouter = require("./routes/user.route");
+app.use("/api/grat", gratRouter);
+
+const authRouter = require("./routes/auth.route");
+app.use("/auth", authRouter);
+
+
+mongoose.connect(serverConfig.dbURI, {
+  dbName: serverConfig.dbName,
   auto_reconnect: true,
   useNewUrlParser: true,
   useCreateIndex: true,
   useUnifiedTopology: true,
   useFindAndModify: false
 }).then(() =>
-  console.log("Connected to MongoDB at:" + config.dbURI +' db name: ' +config.dbName)
+    console.log("Connected to MongoDB at:" + serverConfig.dbURI + ' db name: ' + serverConfig.dbName)
 ).catch(err => {
   console.log("Failed to connect to MongoDB...", err);
   process.exit();
 });
+app.locals.title = 'Gr8 Server';
 
+app.listen(serverConfig.express_port, function (appListenError) {
+  if (appListenError) {
+    console.log("error starting the server:" + appListenError);
+    return;
+  }
 
-app.listen(config.express_port, function () {
-    console.log("Express server listening on port " + config.express_port);
-    app.emit("appStarted");
-
+  console.log(app.locals.title + " listening on port " + serverConfig.express_port);
 });
 module.exports.app = app;

@@ -22,7 +22,7 @@ module.exports.getUser = function (req, res) {
 };
 
 module.exports.deleteUser = function (req, res) {
-
+    // console.log(app.locals.title)
     let userIdReq = req.params.id;
     if (!mongoose.Types.ObjectId.isValid(userIdReq))
         return res.status(400).send("Invalid object id");

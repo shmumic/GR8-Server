@@ -3,7 +3,6 @@ require('dotenv').config();
 const gConfig = require("./../config");
 const envi = process.env.ENV;
 const serverConfig = gConfig[envi];
-const bodyParser = require("body-parser");
 
 const {User} = require("../models/user.model");
 
@@ -27,7 +26,6 @@ passport.use(new GoogleStrategy(serverConfig.googleStrategyConf,
         User.findOrCreate({
             googleId: profile.id
         }, function (err, user, created) {
-            console.log("user was found or created:" + user);
             return cb(err, user);
         });
     }
@@ -49,35 +47,36 @@ module.exports.googleCallBack = function (req, res, next) {
         },
         function (req, foundUser) {
             // Successful authentication, redirect home.
-            console.log("insiside googleCallBack Authenticated:");
-            console.log("foundUser" + foundUser);
-            res.send(jwtCreateAcessToken(foundUser));
+            res.send(this.jwtCreateAcessToken(foundUser));
         })(req, res, next)
 };
 module.exports.jwtAuthenticateToken = function (req, res, next) {
-    const authHeader = req.headers['authorization'];
-    const token = authHeader && authHeader.split(' ')[1]; //the use of &&: if we have an authHeader get the token else set undefined.
-    if (token == null) {
-        return res.sendStatus(401)
+    if (req.headers != 'undfinded' && req.headers != null) {
+        const authHeader = req.headers && req.headers['authorization'];
+        const token = authHeader && authHeader.split(' ')[1]; //the use of &&: if we have an authHeader get the token else set undefined.
+        if (token == null) {
+            return res.sendStatus(401)
+        }
+
+        jwt.verify(token, serverConfig.jwtConfig.acessTokenSecret, (errValditionOfToken, user) => {
+            if (errValditionOfToken) {
+                return res.sendStatus(403)
+            }
+            req.user = user;
+
+            next()
+
+        })
+    } else {
+        res.send('auth error')
     }
 
-    jwt.verify(token, serverConfig.jwtConfig.acessTokenSecret, (errValditionOfToken, user) => {
-        if (errValditionOfToken) {
-            return res.sendStatus(403)
-        }
-        req.user = user;
-        next()
-
-    })
 
 };
-jwtCreateAcessToken = function (req) {
-    console.log("inside JWT token creation");
-    console.log(req);
+module.exports.jwtCreateAcessToken = function (req) {
     user = {_id: req._id};
 
     const acessToken = jwt.sign(user, serverConfig.jwtConfig.acessTokenSecret);
-    console.log("JWT token created:" + acessToken);
 
     return acessToken
 

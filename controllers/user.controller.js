@@ -1,6 +1,6 @@
 const mongoose = require("mongoose");
 const { User } = require("../models/user.model");
-const {Grat} = require("../models/grat.model");
+const {Grat} = require("../models/grat.model").Grat;
 
 module.exports.getUser = function (req, res) {
 

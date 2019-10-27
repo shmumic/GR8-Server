@@ -1,5 +1,6 @@
 const mongoose = require("mongoose");
 const grat = require("./grat.model");
+
 const findOrCreate = require("mongoose-findorcreate");
 
 const userSchema = new mongoose.Schema({
@@ -8,12 +9,7 @@ const userSchema = new mongoose.Schema({
         minlength: 3,
     maxlength: 50
   },
-    /*  authMethod: { ///TBD
-        type: String,
-         minlength: 5,
-        maxlength: 255,
-        unique: true
-      },*/
+    role: String,
   googleId: String,
   facebookId: String,
 

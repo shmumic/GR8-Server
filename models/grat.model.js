@@ -1,5 +1,5 @@
 const mongoose = require("mongoose");
-const gratSchema = new mongoose.Schema({ //grat stands for gratitude
+module.exports.gratSchema = new mongoose.Schema({ //grat stands for gratitude
 
   gratText: { //the actual gratitude
     type: String, //validate length
@@ -7,36 +7,35 @@ const gratSchema = new mongoose.Schema({ //grat stands for gratitude
     maxlength: 280 //just like nowdays twitter
   },
 
-  rating: {
+    rating: {//user ratings a gratitude with a low rating will be removed.
     type: Number
-  }, //user ratings a gratitude with a low rating will be removed.
+    },
+    //is the gratitude for the the eyes of everyone to see
   isPublic: {
     type: Boolean,
     required: true
-  }, //is the gratitude for the the eyes of everyone to see
+  },
+    canVisibilityBeChanged: { //after experiation date the user cannot change the visiblity to public.
+        type: Boolean,
+        required: true
+    },
   published: {
     type: Boolean
   },
     userId: String,//links to the author
-    source: {
-    ip:String,
-    browser: String,
+    ip: String,
+    userAgent: JSON,
     location: { //GeoJson
-      type: {
-        type: String, // Don't do `{ location: { type: String } }`
-        enum: ['Point'], // 'location.type' must be 'Point'
-        required: true
-      },
-      coordinates: {
-        type: [Number],
-        required: true
-      }
-    }
-  },
-  date: {
-
-  },
-  expiretionDate: {},
+        type: {
+            type: String, // Don't do `{ location: { type: String } }`
+            enum: ['Point'], // 'location.type' must be 'Point'
+        },
+        coordinates: {
+            type: [Number],
+        }
+    },
+    publishedDate: Date,
+    expireDate: Date,
   hashtags: {
     type: String
   },
@@ -45,5 +44,5 @@ const gratSchema = new mongoose.Schema({ //grat stands for gratitude
   }
 
 });
-module.exports.Grat = mongoose.model("Grat", gratSchema);
-module.exports.gratSchema = gratSchema;
+
+module.exports.Grat = mongoose.model("Grat", this.gratSchema);

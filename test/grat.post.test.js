@@ -47,14 +47,11 @@ describe("api/Grat", function () {
                         .set({authorization: "token " + goodUserToken, Accept: 'application/json'})
                         .expect(200)
                         .then(function (res) {
-                            console.log("##########res#######");
                             //     console.log(res);
                             assert.strictEqual(res.body.userId, userAdded._id);
                             assert.strictEqual(res.body.gratText, formData.gratText);
                             assert.strictEqual(res.body.isPublic, formData.isPublic);
-                            console.log("##########re2#######");
                             Promise.resolve(done());
-                            console.log("##########re3#######");
 
                         })
 

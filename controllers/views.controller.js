@@ -10,8 +10,8 @@ module.exports.getRegister = function (req, res) {
     res.render("register.ejs")
 };
 module.exports.getLogout = function (req, res) {
-    //todo: delete all sites cookies and local storage
-    res.render("login.ejs")
+    //todo: delete all sites local storage
+    res.render("logout.ejs")
 };
 module.exports.getGrat = function (req, res) {
     res.render("grat.ejs")

@@ -6,6 +6,8 @@ function confObject() {
         dbURI: 'mongodb://localhost:27017/gr8FulDBTest',
         dbName: 'gr8FulDBTest',
         express_port: 3000,
+        sessionSecret: process.env.devtestSessionSecret,
+
         googleStrategyConf: {
             clientID: process.env.devtestgClientId,
             clientSecret: process.env.devtestgClientDevSecret,
@@ -15,7 +17,6 @@ function confObject() {
         jwtConfig: {
             acessTokenSecret: process.env.devtestJWTAccessTokenSecret,
             refreshTokenSecret: process.env.devtestJWTRefreshokenSecret,
-
             issuer: "Gr8Server",
             audience: "Gr8FullUser"
         }
@@ -31,8 +32,9 @@ function confObject() {
         config_id: "production",
         dbURI: process.env.MONGODB,
         dbName: 'gr8FulDB',
-        express_port: process.env.PORT
-        //todo: create add google strategy
+        express_port: process.env.PORT,
+        //todo: create & add google strategy for production
+        sessionSecret: process.env.prodSessionSecret
     }
 
 }

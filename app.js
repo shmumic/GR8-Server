@@ -18,17 +18,19 @@ const mongoose = require("mongoose");
 
 //auth section: passport stratgies and jwt
 const passport = require("passport");
+var cookieParser = require('cookie-parser');
 
 
 var app = express();
 app.use(session({
-  secret: 'keyboard cat',
+    secret: serverConfig.sessionSecret,
   resave: false,
   saveUninitialized: true,
   cookie: {
     //  secure: true
   }
 }));
+app.use(cookieParser());
 
 //serverConfig passport and passport strategies
 app.use(passport.initialize());

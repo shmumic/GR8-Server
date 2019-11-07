@@ -5,7 +5,7 @@ const authController = require("../controllers/auth.controller");
 
 router
     .route('/home')
-    .get(authController.jwtAuthenticateToken, controller.getHome)
+    //.get(authController.jwtAuthenticateToken, controller.getHome)
     .get(controller.getHome);
 
 

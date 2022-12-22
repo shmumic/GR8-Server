@@ -28,7 +28,7 @@
     "express-useragent": "^1.0.13",
     "express-validator": "^6.2.0",
     "http-errors": "^1.7.3",
-    "jsonwebtoken": "^8.5.1",
+    "jsonwebtoken": "^9.0.0",
     "lodash": "^4.17.15",
     "meaningful-string": "^1.2.1",
     "mocha": "^6.2.1",
